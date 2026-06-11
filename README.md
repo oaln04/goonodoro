@@ -11,7 +11,7 @@ A no-nonsense Pomodoro timer built for the gooniverse. Stay locked in, take your
 
 ## How to Run
 
-No installs. No dependencies. Just open `index.html` in your browser and get to work.
+No installs. No dependencies. Just go to https://www.goonodoro.oaln04.xyz and get to work.
 
 ## Built With
 
