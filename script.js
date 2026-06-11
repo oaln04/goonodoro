@@ -2,14 +2,22 @@ let minutes = 25;
 let seconds = 0;
 let sessionCount = 0;
 let timer = null;
+let isBreak = false;
 let startBtn= document.getElementById('start');
 let pauseBtn= document.getElementById('pause');
 let resetBtn= document.getElementById('reset');
 
 startBtn.onclick = function() {
     if (timer === null) {
+        if(!isBreak){
+            let workInput = parseInt(document.getElementById('workDuration').value);
+            if (!isNaN(workInput) && workInput > 0) {
+                minutes = workInput;
+                seconds = 0;
+            }
+        }
         timer = setInterval(updateTimer, 1000);
-        document.getElementById('mode').textContent = 'Lock In!';
+        document.getElementById('mode').textContent = 'Lock in!';
     }
 };
 
@@ -37,6 +45,7 @@ function updateTimer() {
         timer = null;
         document.getElementById('mode').textContent = 'Enjoy your break!';
         sessionCount++;
+        document.getElementById('sessionCount').textContent = 'Sessions Completed: ' + sessionCount;
         return;
     }
 

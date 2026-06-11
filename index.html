@@ -14,10 +14,18 @@
         <div class="card">
             <h2 id="mode">Ready to lock in?</h2>
             <h2 id="timer">25:00</h2>
+            <label>
+                Work Duration:
+                <input type="number" id="workDuration" placeholder="25" min="1" max="60">
+            </label>
+            <label>
+                Goon Duration:
+                <input type="number" id="goonDuration" placeholder="5" min="1" max="30">
+            </label>
             <button id="start">Start</button>
             <button id="pause">Pause</button>
             <button id="reset">Reset</button>
-            <p id="sessionCount">Sessions: 0</p>
+            <p id="sessionCount">Sessions Completed: 0</p>
         </div>
 
         <script src="script.js"></script>
