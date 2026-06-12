@@ -8,8 +8,7 @@ let pauseBtn= document.getElementById('pause');
 let resetBtn= document.getElementById('reset');
 
 startBtn.onclick = function() {
-    if (timer === null) {
-        if(!isBreak && minutes === 25 && seconds === 0){
+    if (timer === null && !isBreak) {
             let workInput = parseInt(document.getElementById('workDuration').value);
             if (!isNaN(workInput) && workInput > 0) {
                 minutes = workInput;
@@ -22,8 +21,7 @@ startBtn.onclick = function() {
 
         timer = setInterval(updateTimer, 1000);
         document.getElementById('mode').textContent = 'Lock in!';
-    }
-};
+    };
 
 pauseBtn.onclick = function() {
     if (timer !== null) {
@@ -37,12 +35,19 @@ resetBtn.onclick = function(){
     clearInterval(timer);
     timer = null;
 
-    minutes = 25;
-    seconds = 0;
+    let workInput = parseInt(document.getElementById('workDuration').value);
+    if (!isNaN(workInput) && (workInput >0)){
+        minutes = workInput;
+        seconds = 0;
+    } else{
+        minutes = 25; //default
+    }
     isBreak = false;
 
-    document.getElementById('timer').textContent = '25:00';
-    document.getElementById('mode').textContent = 'Ready to lock in?';
+     let displayMinutes = minutes.toString().padStart(2, '0');
+        let displaySeconds = seconds.toString().padStart(2, '0');
+        document.getElementById('timer').textContent = displayMinutes + ':' + displaySeconds;
+        document.getElementById('mode').textContent = 'Ready to lock in?';
 };
 
 function updateTimer() {
