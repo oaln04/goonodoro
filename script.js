@@ -15,10 +15,7 @@ startBtn.onclick = function() {
                 seconds = 0;
             }
         }
-        let displayMinutes = minutes.toString().padStart(2, '0');
-        let displaySeconds = seconds.toString().padStart(2, '0');
-        document.getElementById('timer').textContent = displayMinutes + ':' + displaySeconds;
-
+        updateDisplay();
         timer = setInterval(updateTimer, 1000);
         document.getElementById('mode').textContent = 'Lock in!';
     };
@@ -44,9 +41,7 @@ resetBtn.onclick = function(){
     }
     isBreak = false;
 
-     let displayMinutes = minutes.toString().padStart(2, '0');
-        let displaySeconds = seconds.toString().padStart(2, '0');
-        document.getElementById('timer').textContent = displayMinutes + ':' + displaySeconds;
+        updateDisplay();
         document.getElementById('mode').textContent = 'Ready to lock in?';
 };
 
@@ -84,10 +79,13 @@ function updateTimer() {
         minutes--;
     }
 
-    let displayMinutes = minutes.toString().padStart(2, '0');
-    let displaySeconds = seconds.toString().padStart(2, '0');
-
-    document.getElementById('timer').textContent = displayMinutes + ':' + displaySeconds;
+    updateDisplay();
 }
 
 document.getElementById('sessionCount').textContent = 'Sessions Completed: ' + sessionCount;
+
+function updateDisplay(){
+    let displayMinutes = minutes.toString().padStart(2, '0');
+    let displaySeconds = seconds.toString().padStart(2, '0');
+    document.getElementById('timer').textContent = displayMinutes + ':' + displaySeconds;
+}
