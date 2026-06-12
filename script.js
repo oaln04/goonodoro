@@ -54,7 +54,7 @@ function updateTimer() {
         if(!isBreak){
             sessionCount++;
             document.getElementById('sessionCount').textContent = 'Sessions Completed: ' + sessionCount;
-            let breakInput = parseInt(document.getElementById('breakDuration').value);
+            let breakInput = parseInt(document.getElementById('goonDuration').value);
             if (!isNaN(breakInput) && breakInput > 0) {
                 minutes = breakInput;
                 seconds = 0;
