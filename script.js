@@ -9,13 +9,17 @@ let resetBtn= document.getElementById('reset');
 
 startBtn.onclick = function() {
     if (timer === null) {
-        if(!isBreak){
+        if(!isBreak && minutes === 25 && seconds === 0){
             let workInput = parseInt(document.getElementById('workDuration').value);
             if (!isNaN(workInput) && workInput > 0) {
                 minutes = workInput;
                 seconds = 0;
             }
         }
+        let displayMinutes = minutes.toString().padStart(2, '0');
+        let displaySeconds = seconds.toString().padStart(2, '0');
+        document.getElementById('timer').textContent = displayMinutes + ':' + displaySeconds;
+
         timer = setInterval(updateTimer, 1000);
         document.getElementById('mode').textContent = 'Lock in!';
     }
@@ -32,8 +36,11 @@ pauseBtn.onclick = function() {
 resetBtn.onclick = function(){
     clearInterval(timer);
     timer = null;
+
     minutes = 25;
     seconds = 0;
+    isBreak = false;
+
     document.getElementById('timer').textContent = '25:00';
     document.getElementById('mode').textContent = 'Ready to lock in?';
 };
@@ -43,9 +50,25 @@ function updateTimer() {
         document.getElementById('timer').textContent = '00:00';
         clearInterval(timer);
         timer = null;
-        document.getElementById('mode').textContent = 'Enjoy your break!';
-        sessionCount++;
-        document.getElementById('sessionCount').textContent = 'Sessions Completed: ' + sessionCount;
+
+        if(!isBreak){
+            sessionCount++;
+            document.getElementById('sessionCount').textContent = 'Sessions Completed: ' + sessionCount;
+            let breakInput = parseInt(document.getElementById('breakDuration').value);
+            if (!isNaN(breakInput) && breakInput > 0) {
+                minutes = breakInput;
+                seconds = 0;
+            } else{
+                minutes = 5; //default
+            }
+            isBreak = true;
+            document.getElementById('mode').textContent = 'Enjoy your break!';
+            timer = setInterval(updateTimer, 1000);
+        }
+        else{ 
+            isBreak = false;
+            document.getElementById('mode').textContent = 'Ready to lock in?';
+        }
         return;
     }
 
