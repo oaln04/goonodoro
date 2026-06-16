@@ -16,6 +16,8 @@
         <div class="card">
             <h2 id="mode">Ready to lock in?</h2>
             <h2 id="timer">25:00</h2>
+
+            <div class="input-row">
             <label>
                 Work Duration:
                 <input type="number" id="workDuration" placeholder="25" min="1" max="60">
@@ -24,9 +26,17 @@
                 Goon Duration:
                 <input type="number" id="goonDuration" placeholder="5" min="1" max="30">
             </label>
+            </div>
+
+            <div class="button-row">
             <button id="start">Start</button>
             <button id="pause">Pause</button>
+            </div>
+
+            <div class ="reset-row">
             <button id="reset">Reset</button>
+            </div>
+            
             <p id="sessionCount">Sessions Completed: 0</p>
             <div id="overlay" class="overlay"></div>
         </div>
