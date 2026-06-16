@@ -138,7 +138,7 @@ function playSound(frequency) {
 
 function clickSound() {
     let audioCtx = new AudioContext();
-    let bufferSize = audioCtx.sampleRate * 0.05;
+    let bufferSize = audioCtx.sampleRate * 0.15;
     let buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
     let data = buffer.getChannelData(0);
 
@@ -149,10 +149,14 @@ function clickSound() {
     source.buffer = buffer;
 
     let gainNode = audioCtx.createGain();
-    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05); // fade out
+    let filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 150;
+    gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15); // fade out
 
-    source.connect(gainNode);
+    source.connect(filter);
+    filter.connect(gainNode);
     gainNode.connect(audioCtx.destination);
     source.start();
 }
