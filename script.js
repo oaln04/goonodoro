@@ -11,6 +11,7 @@ let card = document.querySelector('.card');
 let overlay = document.getElementById('overlay');
 
 startBtn.onclick = function() {
+    clickSound();
     if(timer === null){
         card.classList.remove('paused', 'break');
         overlay.classList.remove('yellow', 'orange');
@@ -32,6 +33,7 @@ startBtn.onclick = function() {
 };
 
 pauseBtn.onclick = function() {
+    clickSound();
     if (timer !== null) {
         clearInterval(timer);
         timer = null;
@@ -45,6 +47,7 @@ pauseBtn.onclick = function() {
 };
 
 resetBtn.onclick = function(){
+    clickSound();
     clearInterval(timer);
     timer = null;
     sessionStarted = false;
@@ -131,4 +134,25 @@ function playSound(frequency) {
     oscillator.frequency.value = frequency;
     oscillator.start();
     oscillator.stop(audioCtx.currentTime + 1.3); // plays sound for 1.3 seconds
+}
+
+function clickSound() {
+    let audioCtx = new AudioContext();
+    let bufferSize = audioCtx.sampleRate * 0.05;
+    let buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    let data = buffer.getChannelData(0);
+
+    for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1);
+    }
+    let source = audioCtx.createBufferSource();
+    source.buffer = buffer;
+
+    let gainNode = audioCtx.createGain();
+    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05); // fade out
+
+    source.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    source.start();
 }
