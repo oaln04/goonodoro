@@ -3,22 +3,26 @@ let seconds = 0;
 let sessionCount = 0;
 let timer = null;
 let isBreak = false;
+let sessionStarted = false;
 let startBtn= document.getElementById('start');
 let pauseBtn= document.getElementById('pause');
 let resetBtn= document.getElementById('reset');
 
 startBtn.onclick = function() {
-    if (timer === null && !isBreak) {
+    if(timer === null){
+    if (!sessionStarted && !isBreak) {
             let workInput = parseInt(document.getElementById('workDuration').value);
             if (!isNaN(workInput) && workInput > 0) {
                 minutes = workInput;
                 seconds = 0;
             }
         }
+        sessionStarted = true;
         updateDisplay();
         timer = setInterval(updateTimer, 1000);
         document.getElementById('mode').textContent = 'Lock in!';
-    };
+    }
+};
 
 pauseBtn.onclick = function() {
     if (timer !== null) {
@@ -31,7 +35,7 @@ pauseBtn.onclick = function() {
 resetBtn.onclick = function(){
     clearInterval(timer);
     timer = null;
-
+    sessionStarted = false;
     let workInput = parseInt(document.getElementById('workDuration').value);
     if (!isNaN(workInput) && (workInput >0)){
         minutes = workInput;
@@ -67,6 +71,7 @@ function updateTimer() {
         }
         else{ 
             isBreak = false;
+            sessionStarted = false;
             document.getElementById('mode').textContent = 'Ready to lock in?';
         }
         return;
