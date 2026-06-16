@@ -103,3 +103,13 @@ p {
     letter-spacing: 1px;
     margin-top: 15px;
 }
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}   
