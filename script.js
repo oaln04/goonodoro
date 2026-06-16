@@ -16,6 +16,7 @@ startBtn.onclick = function() {
         overlay.classList.remove('yellow', 'orange');
         card.classList.add('running');
         overlay.classList.add('red');
+        document.getElementById('mode').style.color = 'red';
     if (!sessionStarted && !isBreak) {
             let workInput = parseInt(document.getElementById('workDuration').value);
             if (!isNaN(workInput) && workInput > 0) {
@@ -39,6 +40,7 @@ pauseBtn.onclick = function() {
         card.classList.add('paused');
         overlay.classList.add('yellow');
         document.getElementById('mode').textContent = 'Paused, lock in soon or else.';
+        document.getElementById('mode').style.color = 'yellow';
     }
 };
 
@@ -58,6 +60,7 @@ resetBtn.onclick = function(){
         overlay.classList.remove('red', 'yellow', 'orange');
         updateDisplay();
         document.getElementById('mode').textContent = 'Ready to lock in?';
+        document.getElementById('mode').style.color = 'white';
 };
 
 function updateTimer() {
@@ -81,6 +84,7 @@ function updateTimer() {
             overlay.classList.remove('red', 'yellow');
             card.classList.add('break');
             overlay.classList.add('orange');
+            document.getElementById('mode').style.color = 'orange';
             playSound(523);
             document.getElementById('mode').textContent = 'Enjoy your break!';
             timer = setInterval(updateTimer, 1000);
