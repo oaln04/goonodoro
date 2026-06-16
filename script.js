@@ -66,12 +66,14 @@ function updateTimer() {
                 minutes = 5; //default
             }
             isBreak = true;
+            playSound(523);
             document.getElementById('mode').textContent = 'Enjoy your break!';
             timer = setInterval(updateTimer, 1000);
         }
         else{ 
             isBreak = false;
             sessionStarted = false;
+            playSound(330);
             document.getElementById('mode').textContent = 'Ready to lock in?';
         }
         return;
@@ -93,4 +95,13 @@ function updateDisplay(){
     let displayMinutes = minutes.toString().padStart(2, '0');
     let displaySeconds = seconds.toString().padStart(2, '0');
     document.getElementById('timer').textContent = displayMinutes + ':' + displaySeconds;
+}
+
+function playSound(frequency) {
+    let audioCtx = new AudioContext();
+    let oscillator = audioCtx.createOscillator();
+    oscillator.connect(audioCtx.destination);
+    oscillator.frequency.value = frequency;
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.3); // plays sound for 0.3 seconds
 }
