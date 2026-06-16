@@ -21,7 +21,9 @@ body {
 }
 
 #timer {
-    font-size: 40px;
+    font-size: 100px;
     font-weight: bold;
     color:white;
+    margin: 20px 0;
+    letter-spacing: 2px;
 }
