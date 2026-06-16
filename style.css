@@ -35,3 +35,25 @@ body {
     letter-spacing: 3px;
     margin-bottom: 10px;
 }
+
+button {
+    background-color:#FF4500;
+    color:white;
+    border:none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    margin: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 1px;
+    cursor:pointer;
+    transition: 0.2s ease;
+    min-width: 90px;
+}
+
+button:hover {
+    background-color:#FFD700;
+    color:black;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    transform: scale(1.05);
+}
