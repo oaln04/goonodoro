@@ -12,8 +12,8 @@ let overlay = document.getElementById('overlay');
 
 startBtn.onclick = function() {
     if(timer === null){
-        card.classList.remove('paused');
-        overlay.classList.remove('yellow');
+        card.classList.remove('paused', 'break');
+        overlay.classList.remove('yellow', 'orange');
         card.classList.add('running');
         overlay.classList.add('red');
     if (!sessionStarted && !isBreak) {
@@ -34,8 +34,8 @@ pauseBtn.onclick = function() {
     if (timer !== null) {
         clearInterval(timer);
         timer = null;
-        card.classList.remove('running');
-        overlay.classList.remove('red');
+        card.classList.remove('running', 'break');
+        overlay.classList.remove('red', 'orange');
         card.classList.add('paused');
         overlay.classList.add('yellow');
         document.getElementById('mode').textContent = 'Paused, lock in soon or else.';
@@ -54,8 +54,8 @@ resetBtn.onclick = function(){
         minutes = 25; //default
     }
     isBreak = false;
-        card.classList.remove('running', 'paused');
-        overlay.classList.remove('red', 'yellow');
+        card.classList.remove('running', 'paused', 'break');
+        overlay.classList.remove('red', 'yellow', 'orange');
         updateDisplay();
         document.getElementById('mode').textContent = 'Ready to lock in?';
 };
