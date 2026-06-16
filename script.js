@@ -60,7 +60,7 @@ resetBtn.onclick = function(){
         overlay.classList.remove('red', 'yellow', 'orange');
         updateDisplay();
         document.getElementById('mode').textContent = 'Ready to lock in?';
-        document.getElementById('mode').style.color = 'white';
+        document.getElementById('mode').style.color = '#FF4500';
 };
 
 function updateTimer() {
@@ -93,6 +93,7 @@ function updateTimer() {
             isBreak = false;
             card.classList.remove('break');
             overlay.classList.remove('orange');
+            document.getElementById('mode').style.color = '#FF4500';
             sessionStarted = false;
             playSound(330);
             document.getElementById('mode').textContent = 'Ready to lock in?';
