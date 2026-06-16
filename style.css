@@ -27,3 +27,11 @@ body {
     margin: 20px 0;
     letter-spacing: 2px;
 }
+
+#mode {
+    font-size: 28px;
+    color: #FF4500;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
