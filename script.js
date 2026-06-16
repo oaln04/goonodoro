@@ -7,9 +7,15 @@ let sessionStarted = false;
 let startBtn= document.getElementById('start');
 let pauseBtn= document.getElementById('pause');
 let resetBtn= document.getElementById('reset');
+let card = document.querySelector('.card');
+let overlay = document.getElementById('overlay');
 
 startBtn.onclick = function() {
     if(timer === null){
+        card.classList.remove('paused');
+        overlay.classList.remove('yellow');
+        card.classList.add('running');
+        overlay.classList.add('red');
     if (!sessionStarted && !isBreak) {
             let workInput = parseInt(document.getElementById('workDuration').value);
             if (!isNaN(workInput) && workInput > 0) {
@@ -28,6 +34,10 @@ pauseBtn.onclick = function() {
     if (timer !== null) {
         clearInterval(timer);
         timer = null;
+        card.classList.remove('running');
+        overlay.classList.remove('red');
+        card.classList.add('paused');
+        overlay.classList.add('yellow');
         document.getElementById('mode').textContent = 'Paused, lock in soon or else.';
     }
 };
@@ -44,7 +54,8 @@ resetBtn.onclick = function(){
         minutes = 25; //default
     }
     isBreak = false;
-
+        card.classList.remove('running', 'paused');
+        overlay.classList.remove('red', 'yellow');
         updateDisplay();
         document.getElementById('mode').textContent = 'Ready to lock in?';
 };
@@ -66,12 +77,18 @@ function updateTimer() {
                 minutes = 5; //default
             }
             isBreak = true;
+            card.classList.remove('running', 'paused');
+            overlay.classList.remove('red', 'yellow');
+            card.classList.add('break');
+            overlay.classList.add('orange');
             playSound(523);
             document.getElementById('mode').textContent = 'Enjoy your break!';
             timer = setInterval(updateTimer, 1000);
         }
         else{ 
             isBreak = false;
+            card.classList.remove('break');
+            overlay.classList.remove('orange');
             sessionStarted = false;
             playSound(330);
             document.getElementById('mode').textContent = 'Ready to lock in?';
