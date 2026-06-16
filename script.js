@@ -100,8 +100,13 @@ function updateDisplay(){
 function playSound(frequency) {
     let audioCtx = new AudioContext();
     let oscillator = audioCtx.createOscillator();
-    oscillator.connect(audioCtx.destination);
+    let gainNode = audioCtx.createGain();
+    gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1); // fade out
+    oscillator.type = 'sine';
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
     oscillator.frequency.value = frequency;
     oscillator.start();
-    oscillator.stop(audioCtx.currentTime + 0.3); // plays sound for 0.3 seconds
+    oscillator.stop(audioCtx.currentTime + 1.3); // plays sound for 1.3 seconds
 }
