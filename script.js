@@ -151,7 +151,7 @@ function clickSound() {
     let gainNode = audioCtx.createGain();
     let filter = audioCtx.createBiquadFilter();
     filter.type = 'lowpass';
-    filter.frequency.value = 150;
+    filter.frequency.value = 250;
     gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15); // fade out
 
