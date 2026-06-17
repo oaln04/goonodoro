@@ -9,118 +9,184 @@ let pauseBtn= document.getElementById('pause');
 let resetBtn= document.getElementById('reset');
 let card = document.querySelector('.card');
 let overlay = document.getElementById('overlay');
+let startTime;
+let totalSeconds;
+let remainingSeconds;
 
 startBtn.onclick = function() {
     clickSound();
-    if(timer === null){
+
+    if (timer === null) {
+
         card.classList.remove('paused', 'break');
         overlay.classList.remove('yellow', 'orange');
+
         card.classList.add('running');
         overlay.classList.add('red');
+
         document.getElementById('mode').style.color = 'red';
-    if (!sessionStarted && !isBreak) {
-            let workInput = parseInt(document.getElementById('workDuration').value);
+
+        // ✅ ONLY set new time if not resuming
+        if (!sessionStarted && !isBreak) {
+            let workInput = parseInt(
+                document.getElementById('workDuration').value
+            );
+
             if (!isNaN(workInput) && workInput > 0) {
                 minutes = workInput;
-                seconds = 0;
+            } else {
+                minutes = 25;
             }
+
+            totalSeconds = minutes * 60;
         }
+
+        // ✅ ALWAYS reset clock reference
+        startTime = Date.now();
+
         sessionStarted = true;
-        updateDisplay();
+
         timer = setInterval(updateTimer, 1000);
         document.getElementById('mode').textContent = 'Lock in!';
     }
 };
-
 pauseBtn.onclick = function() {
     clickSound();
+
     if (timer !== null) {
         clearInterval(timer);
         timer = null;
+
+        // ✅ lock current remaining time
+        totalSeconds = remainingSeconds;
+
         card.classList.remove('running', 'break');
         overlay.classList.remove('red', 'orange');
+
         card.classList.add('paused');
         overlay.classList.add('yellow');
-        document.getElementById('mode').textContent = 'Paused, lock in soon or else.';
+
+        document.getElementById('mode').textContent =
+            'Paused, lock in soon or else.';
         document.getElementById('mode').style.color = 'yellow';
     }
 };
 
-resetBtn.onclick = function(){
+resetBtn.onclick = function () {
     clickSound();
+
     clearInterval(timer);
     timer = null;
+
     sessionStarted = false;
-    let workInput = parseInt(document.getElementById('workDuration').value);
-    if (!isNaN(workInput) && (workInput >0)){
-        minutes = workInput;
-        seconds = 0;
-    } else{
-        minutes = 25; //default
-    }
     isBreak = false;
-        card.classList.remove('running', 'paused', 'break');
-        overlay.classList.remove('red', 'yellow', 'orange');
-        updateDisplay();
-        document.getElementById('mode').textContent = 'Ready to lock in?';
-        document.getElementById('mode').style.color = '#FF4500';
+
+    // ✅ get input value
+    let workInput = parseInt(document.getElementById('workDuration').value);
+
+    if (!isNaN(workInput) && workInput > 0) {
+        minutes = workInput;
+    } else {
+        minutes = 25; // default
+    }
+
+    seconds = 0;
+
+    // ✅ reset timing system properly
+    totalSeconds = minutes * 60;
+    startTime = null;
+    remainingSeconds = totalSeconds;
+
+    // ✅ reset visuals
+    card.classList.remove('running', 'paused', 'break');
+    overlay.classList.remove('red', 'yellow', 'orange');
+
+    // ✅ reset UI text
+    document.getElementById('timer').textContent =
+        minutes.toString().padStart(2, '0') + ':00';
+
+    document.getElementById('mode').textContent = 'Ready to lock in?';
+    document.getElementById('mode').style.color = '#FF4500';
 };
 
+
 function updateTimer() {
-      if(minutes === 0 && seconds === 0){
+
+    let elapsed = Math.floor((Date.now() - startTime) / 1000);
+    let remaining = totalSeconds - elapsed;
+    remainingSeconds = Math.max(remaining, 0);
+
+    if (remaining <= 0) {
         document.getElementById('timer').textContent = '00:00';
+
         clearInterval(timer);
         timer = null;
 
-        if(!isBreak){
+        if (!isBreak) {
             sessionCount++;
-            document.getElementById('sessionCount').textContent = 'Sessions Completed: ' + sessionCount;
-            let breakInput = parseInt(document.getElementById('goonDuration').value);
+            document.getElementById('sessionCount').textContent =
+                'Sessions Completed: ' + sessionCount;
+
+            let breakInput = parseInt(
+                document.getElementById('goonDuration').value
+            );
+
             if (!isNaN(breakInput) && breakInput > 0) {
                 minutes = breakInput;
-                seconds = 0;
-            } else{
-                minutes = 5; //default
+            } else {
+                minutes = 5;
             }
+
+            seconds = 0;
+
+            // ✅ switch to break
             isBreak = true;
+
             card.classList.remove('running', 'paused');
             overlay.classList.remove('red', 'yellow');
+
             card.classList.add('break');
             overlay.classList.add('orange');
+
             document.getElementById('mode').style.color = 'orange';
+            document.getElementById('mode').textContent =
+                'Enjoy your break!';
+
             playSound(523);
-            document.getElementById('mode').textContent = 'Enjoy your break!';
+
+            // ✅ restart timing correctly
+            totalSeconds = minutes * 60;
+            startTime = Date.now();
+
             timer = setInterval(updateTimer, 1000);
-        }
-        else{ 
+        } else {
+            // ✅ break finished
             isBreak = false;
+            sessionStarted = false;
+
             card.classList.remove('break');
             overlay.classList.remove('orange');
+
             document.getElementById('mode').style.color = '#FF4500';
-            sessionStarted = false;
+            document.getElementById('mode').textContent =
+                'Ready to lock in?';
+
             playSound(330);
-            document.getElementById('mode').textContent = 'Ready to lock in?';
         }
+
         return;
     }
 
-    seconds--;
-  
-    if (seconds < 0){
-        seconds = 59;
-        minutes--;
-    }
+    let displayMinutes = Math.floor(remaining / 60);
+    let displaySeconds = remaining % 60;
 
-    updateDisplay();
+    document.getElementById('timer').textContent =
+        displayMinutes.toString().padStart(2, '0') + ':' +
+        displaySeconds.toString().padStart(2, '0');
 }
 
 document.getElementById('sessionCount').textContent = 'Sessions Completed: ' + sessionCount;
 
-function updateDisplay(){
-    let displayMinutes = minutes.toString().padStart(2, '0');
-    let displaySeconds = seconds.toString().padStart(2, '0');
-    document.getElementById('timer').textContent = displayMinutes + ':' + displaySeconds;
-}
 
 function playSound(frequency) {
     let audioCtx = new AudioContext();
