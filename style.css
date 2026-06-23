@@ -115,6 +115,8 @@ p {
     display:flex;
     flex-direction:column;
     align-items:center;
+    width: min(92vw, 720px);
+    gap: 22px;
 }
 
 #sessionCount {
@@ -192,4 +194,142 @@ input[type=number] {
 
 .input-row, .button-row, .reset-row {
     width: 100%;
+}
+
+.auth-panel,
+.leaderboard-panel {
+    width: min(100%, 520px);
+    border: 2px solid #333;
+    border-radius: 12px;
+    background: #151515;
+    padding: 18px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.tab {
+    min-width: 0;
+    background: transparent;
+    border: 2px solid #FF4500;
+    color: #FF4500;
+}
+
+.tab.active,
+.tab:hover {
+    background: #FF4500;
+    color: white;
+}
+
+.auth-form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    align-items: center;
+}
+
+.auth-form input {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.auth-form button {
+    margin: 0;
+    width: 100%;
+}
+
+#registerForm {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.hidden {
+    display: none !important;
+}
+
+.status-message {
+    min-height: 22px;
+    margin: 12px 0 0;
+    color: #FFD700;
+}
+
+.status-message.error {
+    color: #ff6b6b;
+}
+
+#profileText {
+    margin: 0 0 10px;
+    color: #FFD700;
+    letter-spacing: 1px;
+}
+
+.leaderboard-panel h2 {
+    margin: 0 0 12px;
+    color: #FF4500;
+    letter-spacing: 2px;
+}
+
+#leaderboard {
+    list-style-position: inside;
+    padding: 0;
+    margin: 0;
+}
+
+#leaderboard li {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 9px 12px;
+    border-top: 1px solid #2b2b2b;
+    color: #eee;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+#leaderboard li:first-child {
+    border-top: 0;
+}
+
+#leaderboard strong {
+    color: #FFD700;
+    font-weight: normal;
+}
+
+@media (max-width: 680px) {
+    body {
+        padding: 24px 0;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    .card {
+        width: 100%;
+        box-sizing: border-box;
+        min-width: 0;
+        padding: 28px 18px;
+    }
+
+    #timer {
+        font-size: 72px;
+    }
+
+    .input-row,
+    .button-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .auth-form,
+    #registerForm {
+        grid-template-columns: 1fr;
+    }
 }

@@ -13,6 +13,35 @@
         <h1>Project Goonodoro</h1>
         <p>A Pomodoro timer for the gooniverse.</p>
 
+        <section class="auth-panel" aria-label="Account">
+            <div id="loggedOutView">
+                <div class="auth-tabs">
+                    <button id="showLogin" class="tab active" type="button">Login</button>
+                    <button id="showRegister" class="tab" type="button">Sign Up</button>
+                </div>
+
+                <form id="loginForm" class="auth-form">
+                    <input type="email" id="loginEmail" placeholder="Email" autocomplete="email" required>
+                    <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password" required>
+                    <button type="submit">Login</button>
+                </form>
+
+                <form id="registerForm" class="auth-form hidden">
+                    <input type="text" id="registerUsername" placeholder="Username" autocomplete="username" required>
+                    <input type="email" id="registerEmail" placeholder="Email" autocomplete="email" required>
+                    <input type="password" id="registerPassword" placeholder="Password" autocomplete="new-password" required>
+                    <button type="submit">Sign Up</button>
+                </form>
+            </div>
+
+            <div id="loggedInView" class="hidden">
+                <p id="profileText">Logged in</p>
+                <button id="logout" type="button">Logout</button>
+            </div>
+
+            <p id="authMessage" class="status-message"></p>
+        </section>
+
         <div class="card">
             <h2 id="mode">Ready to lock in?</h2>
             <h2 id="timer">25:00</h2>
@@ -40,6 +69,11 @@
             <p id="sessionCount">Sessions Completed: 0</p>
             <div id="overlay" class="overlay"></div>
         </div>
+
+        <section class="leaderboard-panel" aria-label="Leaderboard">
+            <h2>Leaderboard</h2>
+            <ol id="leaderboard"></ol>
+        </section>
     </div>
         <script src="script.js"></script>
         </body>
